@@ -8,6 +8,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -21,16 +22,10 @@ class NetworkModule {
     fun provideRetrofitService(
     ): RetrofitService {
 
-        val client = OkHttpClient.Builder()
-            .connectTimeout(50, TimeUnit.SECONDS)
-            .writeTimeout(50, TimeUnit.SECONDS)
-            .readTimeout(50, TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .build()
-
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
+            .baseUrl("https://nagwa.free.beeceptor.com")
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(RetrofitService::class.java)
     }
