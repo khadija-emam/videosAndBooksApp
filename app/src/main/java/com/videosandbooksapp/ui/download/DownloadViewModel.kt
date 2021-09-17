@@ -1,4 +1,4 @@
-package com.example.movieapp.ui.download
+package com.videosandbooksapp.ui.download
 
 import android.app.Application
 import android.content.Context
@@ -77,7 +77,7 @@ class DownloadViewModel @Inject constructor(
         }
     }
 
-    private fun writeFile(body: ResponseBody?, movieName: String?): File {
+    private fun writeFile(body: ResponseBody?, videoName: String?): File {
         val fileSize = body?.contentLength()
 
         val bis: InputStream = BufferedInputStream(
@@ -87,7 +87,7 @@ class DownloadViewModel @Inject constructor(
         var count: Int = 0
         var total: Long = 0
 
-        val file = File(movieName)
+        val file = File(videoName)
 
         val fileOutputStream =
             application.openFileOutput(file.name, Context.MODE_PRIVATE)

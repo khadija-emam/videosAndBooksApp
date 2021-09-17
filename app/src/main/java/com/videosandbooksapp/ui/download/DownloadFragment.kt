@@ -1,4 +1,4 @@
-package com.example.movieapp.ui.download
+package com.videosandbooksapp.ui.download
 
 import android.content.Context
 import android.os.Bundle

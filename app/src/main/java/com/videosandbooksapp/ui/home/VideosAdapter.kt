@@ -21,7 +21,7 @@ class VideosAdapter(val onClickListener: VideoClickListener) : ListAdapter<Video
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         val video = getItem(position)
         holder.bind(video)
-        holder.binding.clickInterface=onClickListener
+        holder.itemView.setOnClickListener { video?.let { onClickListener.onClick(it) } }
 
 
     }

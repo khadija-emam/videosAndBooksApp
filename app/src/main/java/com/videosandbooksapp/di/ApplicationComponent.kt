@@ -1,6 +1,7 @@
 package com.videosandbooksapp.di
 
-import android.content.Context
+import android.app.Application
+import com.videosandbooksapp.ui.download.DownloadFragment
 import com.videosandbooksapp.ui.home.HomeFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -18,8 +19,9 @@ interface ApplicationComponent {
     @Component.Factory
     interface Factory {
         // With @BindsInstance, the Context passed in will be available in the graph
-        fun create(@BindsInstance context: Context): ApplicationComponent
+        fun create(@BindsInstance application:Application): ApplicationComponent
     }
 
     fun inject(homeFragment: HomeFragment)
+    fun inject(downloadFragment: DownloadFragment)
 }

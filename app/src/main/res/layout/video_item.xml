@@ -11,14 +11,12 @@
           <variable
             name="video"
             type="com.videosandbooksapp.models.Videos"/>
-  <variable
-      name="clickInterface"
-       type="com.videosandbooksapp.ui.home.VideoClickListener"/>
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:onClick="@{()->clickInterface.onClick}">
+       >
 
         <ImageView
             android:id="@+id/icon"
