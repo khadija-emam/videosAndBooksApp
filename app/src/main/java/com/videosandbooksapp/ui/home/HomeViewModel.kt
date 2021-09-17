@@ -14,7 +14,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.schedulers.Schedulers.io
 import okhttp3.Response
 import javax.inject.Inject
 import javax.security.auth.callback.Callback
@@ -33,6 +32,9 @@ class HomeViewModel @Inject constructor(val repository: Repository):ViewModel() 
     private val _progress = MutableLiveData<Boolean>()
     val progress: LiveData<Boolean>
         get() = _progress
+    private val _navigate = MutableLiveData<Videos>()
+    val navigate: LiveData<Videos>
+        get() = _navigate
 
     private val c=CompositeDisposable()
 
@@ -44,7 +46,6 @@ class HomeViewModel @Inject constructor(val repository: Repository):ViewModel() 
           .observeOn(AndroidSchedulers.mainThread()).subscribe(object :SingleObserver<List<Videos>>{
               override fun onSubscribe(d: Disposable) {
                   c.addAll(d)
-                  _progress.value=false
 
               }
 
@@ -63,6 +64,9 @@ class HomeViewModel @Inject constructor(val repository: Repository):ViewModel() 
 
 
 
+    }
+    fun onItemClicked(videos: Videos) {
+        _navigate.value = videos
     }
 
     override fun onCleared() {

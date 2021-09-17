@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
-class BindingAdapter {
+
     /**
      * Binding adapter used to hide the spinner once data is available
      */
@@ -18,7 +18,6 @@ class BindingAdapter {
      * Binding adapter used to display images from URL using Glide
      */
     @BindingAdapter("imageUrl")
-    fun setImageUrl(imageView: ImageView, url: String) {
-        Glide.with(imageView.context).load(url).into(imageView)
+    fun setImage(imageView: ImageView, drawable:Int) {
+        Glide.with(imageView.context).load(drawable).into(imageView)
     }
-}

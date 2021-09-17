@@ -9,5 +9,17 @@
         android:id="@+id/homeFragment"
         android:name="com.videosandbooksapp.ui.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_homeFragment_to_downloadFragment"
+            app:destination="@id/downloadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.example.movieapp.ui.download.DownloadFragment"
+        android:label="DownloadFragment" >
+        <argument
+            android:name="video"
+            app:argType="com.videosandbooksapp.models.Videos" />
+    </fragment>
 </navigation>

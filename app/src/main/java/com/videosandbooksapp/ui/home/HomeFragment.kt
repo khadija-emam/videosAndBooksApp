@@ -17,9 +17,10 @@ import com.videosandbooksapp.databinding.HomeFragmentBinding
 import com.videosandbooksapp.di.ViewModelFactory
 import javax.inject.Inject
 
-class HomeFragment :Fragment(){
+class HomeFragment : Fragment() {
     lateinit var adapter: VideosAdapter
-    private lateinit var binding:HomeFragmentBinding
+    private lateinit var binding: HomeFragmentBinding
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -35,40 +36,51 @@ class HomeFragment :Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= DataBindingUtil.inflate(inflater, R.layout.home_fragment,container,false)
-        binding.lifecycleOwner=this
+        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
+        binding.lifecycleOwner = this
 
         setUpAdapter()
         observeForMessage()
         observeForVideos()
         observeForLoading()
-
+        observeNavigation()
         return binding.root
     }
-    private fun observeForLoading(){
-        viewModel.progress.observe(viewLifecycleOwner, Observer {
-         if (it){
-             binding.loading.visibility=View.VISIBLE
-         }else{
-             binding.loading.visibility=View.GONE
 
-         }
+    private fun observeNavigation() {
+        viewModel.navigate.observe(viewLifecycleOwner) {
+            it?.let {
+                HomeFragmentDirections.actionHomeFragmentToDownloadFragment(it)
+            }
+        }
+    }
+
+    private fun observeForLoading() {
+        viewModel.progress.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.loading.visibility = View.VISIBLE
+            } else {
+                binding.loading.visibility = View.GONE
+
+            }
         })
     }
 
-    private fun observeForVideos(){
+    private fun observeForVideos() {
         viewModel.getPosts()
         viewModel.videosList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
-    private fun observeForMessage(){
-     viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-         Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
-     })
+
+    private fun observeForMessage() {
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
     }
-    private fun setUpAdapter(){
-        adapter= VideosAdapter()
-        binding.videosRv.adapter=adapter
+
+    private fun setUpAdapter() {
+        adapter = VideosAdapter(VideoClickListener { viewModel.onItemClicked(it) })
+        binding.videosRv.adapter = adapter
     }
 }
